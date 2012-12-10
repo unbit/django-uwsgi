@@ -1,10 +1,6 @@
-import sys, os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url
 
 urlpatterns = patterns('uwsgi_admin.views',
-                        (r'^$', 'index'),
-                        (r'^reload/$', 'reload')
-                )
-
+    url(r'^$', 'index', name='uwsgi_index'),
+    url(r'^reload/$', 'reload', name='uwsgi_reload')
+)

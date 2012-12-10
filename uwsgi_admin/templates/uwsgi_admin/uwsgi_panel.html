@@ -1,0 +1,75 @@
+{% load i18n %}{% load url from future %}
+
+<div id="content-main">
+<h1>{% trans 'uWSGI status' %}</h1>
+<b>{% trans 'masterpid' %}:</b> {{ masterpid }}<br/>
+<b>{% trans 'started_on' %}:</b> {{ started_on }}<br/>
+<b>{% trans 'buffer size' %}:</b> {{ buffer_size }}<br/>
+<b>{% trans 'workers' %}:</b> {{ numproc }}<br/>
+<b>{% trans 'total requests' %}:</b> {{ total_requests }}<br/>
+
+<br/>
+
+<div class="module" style="width:860px">
+<table>
+	<caption style="width:860px">{% trans 'workers' %}</caption>
+	<thead>
+		<tr>
+			<th scope="row">{% trans 'id' %}</th>
+			<th scope="row">{% trans 'pid' %}</th>
+			<th scope="row">{% trans 'requests' %}</th>
+			<th scope="row">{% trans 'running time (milliseconds)' %}</th>
+			<th scope="row">{% trans 'load' %}</th>
+			<th scope="row">{% trans 'last spawn' %}</th>
+			<th scope="row">{% trans 'respawn count' %}</th>
+			<th scope="row">{% trans 'address space (vsz)' %}</th>
+			<th scope="row">{% trans 'resident memory (rss)' %}</th>
+		</tr>
+	</thead>
+	<tbody>
+{% for w in workers %}
+	<tr>
+		<td align="center">{{ w.id }}</td>
+		<td align="center">{{ w.pid }}</td>
+		<td align="right">{{ w.requests }}</td>
+		<td align="right">{{ w.running_time }}</td>
+		<td align="right">{{ w.load|floatformat:2 }} %</td>
+		<td align="right">{{ w.last_spawn_str }}</td>
+		<td align="right">{{ w.respawn_count }}</td>
+		<td align="right">{{ w.vsz|filesizeformat }}</td>
+		<td align="right">{{ w.rss|filesizeformat }}</td>
+	</tr>
+{% endfor %}
+	</tbody>
+</table>
+</div>
+
+<div class="module" style="width:860px">
+<table>
+	<caption style="width:860px">{% trans 'spooler jobs' %}</caption>
+	<thead>
+		<tr>
+			<th scope="row">{% trans 'job filename' %}</th>
+			<th scope="row">{% trans 'environment' %}</th>
+		</tr>
+	</thead>
+	<tbody>
+{% for j in jobs %}
+	<tr>
+		<td align="left">{{ j.file }}</td>
+		<td align="left">{{ j.env }}</td>
+	</tr>
+{% endfor %}
+	</tbody>
+</table>
+</div>
+
+{% if masterpid %}
+<br/>
+<form{% if has_file_field %} enctype="multipart/form-data"{% endif %} action="{% url 'uwsgi_reload' %}" method="post">
+{% csrf_token %}
+<input type="submit" value="{% trans 'gracefully reload uWSGI' %}" name="_reload">
+</form>
+{% endif %}
+
+</div>

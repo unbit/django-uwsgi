@@ -31,6 +31,10 @@ Django related examples/tricks/modules for uWSGI
  * Translations?
  * Screenshots
 
+### Authors
+
+See [CONTRIBUTORS](CONTRIBUTORS)
+
 ### License
 
 [MIT](LICENSE)

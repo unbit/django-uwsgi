@@ -18,7 +18,7 @@ Django related examples/tricks/modules for uWSGI
   ```
 ### Upcoming Features
 
-  * Admin page with stats (with options to reload uWSGI, clear uWSGI cache)
+  * Admin page with stats (options to reload/stop uWSGI, clear uWSGI cache)
   * uWSGI Cache backend for Django
   * uWSGI Email backend for Django(send emails via uwsgi [spooler](http://uwsgi-docs.readthedocs.org/en/latest/Spooler.html)
   * Debug Panel for [django-debug-toolbar](http://django-debug-toolbar.readthedocs.org/en/latest/panels.html)
@@ -35,6 +35,7 @@ Django related examples/tricks/modules for uWSGI
  * Docs
  * Translations?
  * Screenshots
+ * Add Django models to [store Vassals info/config in PostgreSQL](http://uwsgi-docs.readthedocs.org/en/latest/ImperialMonitors.html#pg-scan-a-postgresql-table-for-configuration)
 
 ### Authors
 

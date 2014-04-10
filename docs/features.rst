@@ -6,7 +6,7 @@ Django-uWSGI Features
 * uWSGI Email backend for Django(send emails via uWSGI's `spooler`_)
 * Debug Panel for `django-debug-toolbar`_ (offers same functions as admin page)
 * Django template loader for `embedded`_ into uWSGI files
-* Django management command ``runuwsgi``(with live autoreload when DEBUG is True)
+* Django management command ``runuwsgi`` (with live autoreload when DEBUG is True)
 * uWSGI config generator
 * Django CBV Mixins based on uWSGI decorators
 

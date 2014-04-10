@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class uWSGIKitConfig(AppConfig):
+class DjangouWSGIConfig(AppConfig):
     name = 'django_uwsgi'
     verbose_name = 'uWSGI for Django'

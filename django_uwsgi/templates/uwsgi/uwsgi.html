@@ -1,18 +1,40 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/app_index.html" %}
+{% load i18n %}
 
-{% load i18n %}{% load url from future %}
+{% block title %}{% trans "uWSGI Stats" %}{% endblock %}
 
+{% block extrahead %}
+    <style>
+        .module {
+            width: 980px;
+        }
+        .balanced table {
+            width: 100%;
+        }
+        .balanced th {
+            width: inherit !important;
+        }
+        .balanced th, .balanced td {
+            text-align: center;
+        }
 
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a> &rsaquo;
-    {% trans 'uWSGI' %}
-</div>
+    </style>
 {% endblock %}
 
+{% if not is_popup %}
+  {% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+      &rsaquo;
+      <a href="{% url 'uwsgi_index' %}">{% trans "uWSGI" %}</a>
+      &rsaquo;
+      {% trans "Status" %}
+    </div>
+  {% endblock %}
+{% endif %}
+
+{% block bodyclass %}dashboard{% endblock %}
 
 {% block content %}
-
-{% include "uwsgi/panel.html" %}
-
+    {% include "uwsgi/panel.html" %}
 {% endblock %}

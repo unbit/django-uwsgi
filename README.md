@@ -35,7 +35,7 @@ Django related examples/tricks/modules for uWSGI
  * Docs
  * Translations?
  * Screenshots
- * Add Django models to [store Vassals info/config in PostgreSQL](http://uwsgi-docs.readthedocs.org/en/latest/ImperialMonitors.html#pg-scan-a-postgresql-table-for-configuration)
+ * Add Django models to store Vassals info/config in [PostgreSQL](http://uwsgi-docs.readthedocs.org/en/latest/ImperialMonitors.html#pg-scan-a-postgresql-table-for-configuration) or [MongoDB](http://uwsgi-docs.readthedocs.org/en/latest/ImperialMonitors.html#mongodb-scan-mongodb-collections-for-configuration)
 
 ### Authors
 

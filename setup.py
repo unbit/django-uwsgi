@@ -18,7 +18,6 @@ setup(
     author='Eugene MechanisM',
     author_email='eugene@mechanism.name',
     license='MIT',
-    #namespace_packages=['uwsgi', ],
     zip_safe=False,
     classifiers=[
         'Development Status :: 3 - Alpha',

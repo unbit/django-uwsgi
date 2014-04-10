@@ -4,7 +4,7 @@ __version__ = '0.1.0'
 try:
     import uwsgi
 except ImportError:
-    uwsgi = False
+    uwsgi = None
 
 
 try:

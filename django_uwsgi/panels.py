@@ -39,4 +39,4 @@ class uWSGIDebugPanel(DebugPanel):
                         'workers': workers,
                         'jobs': jobs,
                         })
-        return render_to_string('uwsgi_admin/uwsgi_panel.html', context)
+        return render_to_string('uwsgi/panel.html', context)

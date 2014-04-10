@@ -23,7 +23,7 @@ def index(request):
         for j in spooler_jobs:
             jobs.append({'file': j, 'env': uwsgi.parsefile(j)})
 
-    return render_to_response('uwsgi_admin/uwsgi.html', {
+    return render_to_response('uwsgi/uwsgi.html', {
         'masterpid': uwsgi.masterpid(),
         'started_on': time.ctime(uwsgi.started_on),
         'buffer_size': uwsgi.buffer_size,

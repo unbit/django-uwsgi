@@ -1,4 +1,4 @@
-include AUTHORS
+include CONTRIBUTORS
 include LICENSE
 include README.md
 recursive-include django_uwsgi/templates *

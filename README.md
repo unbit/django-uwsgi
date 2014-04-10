@@ -2,6 +2,11 @@
 
 Django related examples/tricks/modules for uWSGI
 
+### Warning!
+
+ This code is not production ready yet!
+
+
 ### Installation
   ```sh
   pip install django-uwsgi

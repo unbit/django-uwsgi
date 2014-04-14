@@ -11,7 +11,7 @@ Django related examples/tricks/modules for uWSGI
 
  [Read the documentation at rtfd.org](http://django-uwsgi.rtfd.org)
 
-### Authors
+### Contributors
 
 See [CONTRIBUTORS](CONTRIBUTORS)
 

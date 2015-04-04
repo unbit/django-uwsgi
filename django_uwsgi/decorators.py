@@ -12,6 +12,9 @@ from threading import Thread
 from django_uwsgi import uwsgi, pickle
 
 
+if uwsgi is None:
+    raise ImportError("uWSGI is not available")
+
 if uwsgi.masterpid() == 0:
     raise Exception(
         "you have to enable the uWSGI master process to use this module")

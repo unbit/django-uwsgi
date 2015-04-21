@@ -1,12 +1,8 @@
 import time
 from django.db import models
-from django.db.models.signals import post_save
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.utils.timezone import now
 from django.utils.text import get_valid_filename, slugify
 from django.utils.encoding import python_2_unicode_compatible
-# from .signals import vassal_saved
 
 
 EXTENSION_CHOICES = (
@@ -95,6 +91,3 @@ class Vassal(models.Model):
         verbose_name = _("Emperor's Vassal")
         verbose_name_plural = _("Emperor's Vassals")
         db_table = 'vassals'
-
-
-# post_save.connect(vassal_saved, sender=Vassal, dispatch_uid='uwsgi_vassal_saved')

@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View, TemplateView
 
 from django.core.exceptions import PermissionDenied
-from django import apps
+from django.conf import settings
 from . import uwsgi
 
 
@@ -13,7 +13,7 @@ class uWSGIStatus(TemplateView):
 
     """uWSGI Status View"""
 
-    if apps.is_installed('wagtail.wagtailadmin'):
+    if ('wagtail.wagtailadmin' in settings.INSTALLED_APPS):
         template_name = 'uwsgi/wagtail_uwsgi.html'
     else:
         template_name = 'uwsgi/uwsgi.html'

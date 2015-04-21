@@ -6,7 +6,7 @@
 
 <div id="content-main" class="inline-related tabular">
     <div class="module">
-    <header class="nice-padding"><h4>{% trans 'Status' %}</h4></header>
+    <h4>{% trans 'Status' %}</h4>
         <table class="listing chooser">
             <thead>
                 <tr>
@@ -25,7 +25,7 @@
         </table>
     </div>
     <div class="module">
-    <header class="nice-padding"><h4>{% trans 'Options' %}</h4></header>
+    <h4>{% trans 'Options' %}</h4>
         <table class="listing chooser">
             <thead>
                 <tr>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="module balanced">
-    <header class="nice-padding"><h4>{% trans 'Workers' %}</h4></header>
+    <h4>{% trans 'Workers' %}</h4>
         <table class="listing chooser">
             <thead>
                 <tr>
@@ -82,7 +82,7 @@
         </table>
     </div>
     <div class="module balanced">
-    <header class="nice-padding"><h4>{% trans 'Spooler jobs' %}</h4></header>
+    <h4>{% trans 'Spooler jobs' %}</h4>
         <table class="listing chooser">
 
             <thead>
@@ -101,7 +101,7 @@
             </tbody>
         </table>
     </div>
-    
+
     {% if masterpid %}
     <div class="submit-row">
         <a href="{% url 'uwsgi_reload' %}">{% trans 'Gracefully reload uWSGI' %}</a>

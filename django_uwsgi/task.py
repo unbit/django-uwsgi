@@ -11,5 +11,5 @@ BACKEND = getattr(settings, 'UWSGI_EMAIL_BACKEND',
 
 @spool
 def send_mail(arguments):
-    conn = get_connection(backend = BACKEND)
+    conn = get_connection(backend=BACKEND)
     conn.send_messages([pickle.loads(arguments['body'])])

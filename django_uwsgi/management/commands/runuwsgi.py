@@ -11,9 +11,8 @@ django_project = os.path.basename(root)
 class Command(BaseCommand):
     help = "Runs this project as a uWSGI application. Requires the uwsgi binary in system path."
 
-    http_port = '8000'
+    http_port = os.getenv('PORT', '8000')  # for heroku
     socket_addr = None
-
 
     def handle(self, *args, **options):
         for arg in args:
@@ -24,12 +23,6 @@ class Command(BaseCommand):
             elif k == 'socket':
                 self.http_port = None
                 self.socket_addr = v
-
-        # load http and python plugin: first the specific version, otherwise try with the generic one
-        if self.http_port:
-            os.environ['UWSGI_PLUGINS'] = 'http,python%d%d:python' % (sys.version_info[0], sys.version_info[1])
-        else:
-            os.environ['UWSGI_PLUGINS'] = 'python%d%d:python' % (sys.version_info[0], sys.version_info[1])
 
         # load the Django WSGI handler
         os.environ['UWSGI_MODULE'] = '%s.wsgi' % django_project
@@ -42,31 +35,44 @@ class Command(BaseCommand):
         # set protocol as uwsgi
         os.environ['UWSGI_PROTOCOL'] = 'uwsgi'
 
-
         # bind the http server to the default port
         if self.http_port:
             os.environ['UWSGI_HTTP_SOCKET'] = ':%s' % self.http_port
         elif self.socket_addr:
             os.environ['UWSGI_UWSGI_SOCKET'] = self.socket_addr
         # set process names
-        os.environ['UWSGI_AUTO_PROCNAME'] = '1'
+        os.environ['UWSGI_AUTO_PROCNAME'] = 'true'
         os.environ['UWSGI_PROCNAME_PREFIX_SPACED'] = '[uWSGI %s]' % django_project
         # remove sockets/pidfile at exit
-        os.environ['UWSGI_VACUUM'] = '1'
+        os.environ['UWSGI_VACUUM'] = 'true'
         # retrieve/set the PythonHome
-        os.environ['UWSGI_PYHOME'] = sys.prefix
+        os.environ['UWSGI_VIRTUALENV'] = sys.prefix
+        # add project to python path
+        os.environ['UWSGI_PP'] = root
+        
+        os.environ['UWSGI_POST_BUFFERING'] = '1048576'
+        os.environ['UWSGI_RELOAD_ON_RSS'] = '300'
         # increase buffer size a bit
         os.environ['UWSGI_BUFFER_SIZE'] = '65535'
-        # add threads for concurrency
-        os.environ['UWSGI_ENABLE_THREADS'] = '1'
-        os.environ['UWSGI_LAZY_APPS'] = '1'
-        os.environ['UWSGI_SINGLE_INTERPRETER'] = '1'
-        os.environ['UWSGI_AUTOLOAD'] = '1'
+        # some additions required by newrelic
+        os.environ['UWSGI_ENABLE_THREADS'] = 'true'
+        os.environ['UWSGI_LAZY_APPS'] = 'true'
+        os.environ['UWSGI_SINGLE_INTERPRETER'] = 'true'
+        os.environ['UWSGI_AUTOLOAD'] = 'true'
         # set 10 workers and cheaper to number of cpus
         os.environ['UWSGI_WORKERS'] = '12'
         os.environ['UWSGI_CHEAPER'] = str(multiprocessing.cpu_count())
         # enable the master process
-        os.environ['UWSGI_MASTER'] = '1'
+        os.environ['UWSGI_MASTER'] = 'true'
+
+        os.environ['UWSGI_NO_ORPHANS'] = 'true'
+        os.environ['UWSGI_MEMORY_REPORT'] = 'true'
+        os.environ['UWSGI_DISABLE_LOGGING'] = 'true'
+
+        # set harakiri
+        os.environ['UWSGI_HARAKIRI'] = '60'
+        os.environ['UWSGI_HARAKIRI_VERBOSE'] = 'true'
+
         # set uid and gid
         os.environ['UWSGI_UID'] = str(os.getuid())
         os.environ['UWSGI_GID'] = str(os.getgid())
@@ -74,12 +80,13 @@ class Command(BaseCommand):
         if 'django_uwsgi' in settings.EMAIL_BACKEND:
             os.environ['UWSGI_SPOOLER'] = '/tmp'
             os.environ['UWSGI_SPOOLER_IMPORT'] = 'django_uwsgi.task'
+        # TODO: Figure out cache
         # os.environ['UWSGI_CACHE2'] = 'name=default,items=20000,keysize=128,blocksize=4096'
         if settings.DEBUG:
             # map static files
             os.environ['UWSGI_STATIC_MAP'] = '%s=%s' % (settings.STATIC_URL, settings.STATIC_ROOT)
             os.environ['UWSGI_PY_AUTORELOAD'] = '2'
-            os.environ['UWSGI_PRINT_CONFIG'] = '1'
+            os.environ['UWSGI_SHOW_CONFIG'] = 'true'
         # exec the uwsgi binary
         os.execvp('uwsgi', ('uwsgi',))
 

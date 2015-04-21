@@ -1,9 +1,7 @@
-"""uWSGI Template Loader"""
-
 from django.template.base import TemplateDoesNotExist
 from django.template.loader import BaseLoader
 from django.conf import settings
-from django_uwsgi import uwsgi
+from . import uwsgi
 
 
 class Loader(BaseLoader):

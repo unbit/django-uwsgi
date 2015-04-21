@@ -1,7 +1,7 @@
 Welcome to Django-uWSGI's documentation!
 ========================================
 
-You can view the code of this project or fork it (please, send pull requests), on `Github`_.
+You can view the code of this project or fork it (please, send pull requests), at `Github <https://github.com/unbit/django-uwsgi>`_.
 
 
 .. toctree::
@@ -23,6 +23,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
-.. _Github: https://github.com/unbit/django-uwsgi

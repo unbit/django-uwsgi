@@ -3,7 +3,7 @@ Things Todo for Django-uWSGI
 
 * Tests
 * Create ``stats.py`` and and use it to get uWSGI stats in ``views.py`` and ``panels.py`` or by some other application(more DRY)
-* Add to repo email & cache backends, runuwsgi, mixins
+* Add to repo email & cache backends, runuwsgi, CBV mixins
 * uWSGI config generator
 * `Docs <http://django-uwsgi.readthedocs.org/en/latest/>`_
 * Translations?

@@ -1,28 +1,43 @@
 {% load i18n %}
 {% if unavailable %}
-    <h1>{% trans 'ERROR: uWSGI is not available!' %}</h1>
+    <h4>{% trans 'ERROR: uWSGI is not available!' %}</h4>
 {% else %}
-<h1>uWSGI {{ version }} status @ {{ hostname }}</h1>
+
+
 <div id="content-main" class="inline-related tabular">
     <div class="module">
-        <table>
-            <caption>{% trans 'Status' %}</caption>
+    <header class="nice-padding"><h4>{% trans 'Status' %}</h4></header>
+        <table class="listing chooser">
+            <thead>
+                <tr>
+                    <th>Option</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
             <tbody>
                 {% for key, value in stats %}
                 <tr class="{% cycle 'row1' 'row2' %}">
-                    <th scope="row">{{ key }}</th><td>{{ value }}</td>
+                    <td class="title" scope="row"><h2>{{ key }}</h2></td>
+                    <td>{{ value }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
     <div class="module">
-        <table>
-            <caption>{% trans 'Options' %}</caption>
+    <header class="nice-padding"><h4>{% trans 'Options' %}</h4></header>
+        <table class="listing chooser">
+            <thead>
+                <tr>
+                    <th>Option</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
             <tbody>
                 {% for key, value in options %}
                 <tr class="{% cycle 'row1' 'row2' %}">
-                    <th scope="row">{{ key }}</th><td>{{ value }}</td>
+                    <td class="title" scope="row"><h4>{{ key }}</h4></td>
+                    <td>{{ value }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -30,8 +45,8 @@
     </div>
 
     <div class="module balanced">
-        <table>
-            <caption>{% trans 'Workers' %}</caption>
+    <header class="nice-padding"><h4>{% trans 'Workers' %}</h4></header>
+        <table class="listing chooser">
             <thead>
                 <tr>
                     <th>id</th>
@@ -67,8 +82,9 @@
         </table>
     </div>
     <div class="module balanced">
-        <table>
-            <caption>{% trans 'Spooler jobs' %}</caption>
+    <header class="nice-padding"><h4>{% trans 'Spooler jobs' %}</h4></header>
+        <table class="listing chooser">
+
             <thead>
                 <tr>
                     <th>job filename</th>
@@ -85,10 +101,15 @@
             </tbody>
         </table>
     </div>
-
+    
     {% if masterpid %}
-    <a href="{% url 'uwsgi_reload' %}">{% trans 'Gracefully reload uWSGI' %}</a>
-    <a href="{% url 'uwsgi_cache_clear' %}">{% trans 'Clear uWSGI cache' %}</a>
+    <div class="submit-row">
+        <a href="{% url 'uwsgi_reload' %}">{% trans 'Gracefully reload uWSGI' %}</a>
+        <a href="{% url 'uwsgi_cache_clear' %}">{% trans 'Clear uWSGI cache' %}</a>
+    </div>
     {% endif %}
+
 </div>
+
+
 {% endif %}

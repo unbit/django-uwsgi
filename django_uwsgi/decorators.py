@@ -1,4 +1,5 @@
-""" uWSGI decorators
+"""
+uWSGI decorators
 shipped with django-uwsgi in case if uWSGI installed system-wide,
 and django project runs in Emperor mode and using virtualenv,
 so uwsgidecorators module not importable.
@@ -9,7 +10,7 @@ from functools import partial
 import sys
 from threading import Thread
 
-from django_uwsgi import uwsgi, pickle
+from . import uwsgi, pickle
 
 
 if uwsgi is None:

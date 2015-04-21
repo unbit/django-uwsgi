@@ -1,0 +1,205 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+
+
+{% if unavailable %}
+    <h1>{% trans 'ERROR: uWSGI is not available!' %}</h1>
+{% else %}
+
+{% block titletag %}{% trans "uWSGI Status" %}{% endblock %}
+{% block bodyclass %}uwsgi{% endblock %}
+
+{% block content %}
+
+<ul class="breadcrumb">
+  <li class="home"><a href="{% url 'wagtailadmin_home' %}" class="icon icon-home text-replace">{% trans 'Home' %}</a></li>
+  <li><a href="#">{% trans "Settings" %}</a></li>
+  <li><a href="{{ page.url }}">{% trans "uWSGI Status" %}</a></li>
+</ul>
+<header class="merged tab-merged nice-padding">
+  <div class="row row-flush">
+      <div class="left col9">
+          <h1 class="icon icon-cog-empty-inverse">{% trans "uWSGI Status" %} <span>running @ {{ hostname }}</span></h1>
+      </div>
+      <div class="right col3">
+        <a target="_blank" href="https://github.com/unbit/uwsgi" class="status-tag primary"><i class="fa fa-github"></i> {% trans "uWSGI version" %} {{ version }}</a>
+
+          <div class="privacy-indicator public">
+             <a target="_blank" href="uwsgi-docs.rtfd.org/" class="status-tag primary  action-set-privacy">
+          <span class="label-public icon icon-view">{% trans "Documentation" %}</span>
+        </a>
+</div>
+      </div>
+  </div>
+</header>
+
+
+<ul class="tab-nav merged">
+        <li class="active"><a href="#stats" class="active">{% trans "Information" %}</a></li>
+        <li><a href="#options">{% trans "Options" %}</a></li>
+        <li><a href="#workers">{% trans "Workers" %}</a></li>
+        <li><a href="#applications">{% trans "Applications" %}</a></li>
+        <li><a href="#spooler">{% trans "Spooler" %}</a></li>
+</ul>
+
+<div class="tab-content">
+        <section id="stats" class="active">
+        <header class="nice-padding"><h2>{% trans 'Information' %}</h2></header>
+            <table class="listing chooser">
+            <thead>
+                <tr>
+                    <th>{% trans "Option" %}</th>
+                    <th>{% trans "Value" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in stats %}
+                <tr>
+                    <td class="title" scope="row"><h2>{{ key }}</h2></td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </section>
+
+        <section id="options">
+        <header class="nice-padding"><h2>{% trans 'Options' %}</h2></header>
+            <table class="listing chooser">
+            <thead>
+                <tr>
+                    <th>{% trans "Option" %}</th>
+                    <th>{% trans "Value" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in options %}
+                <tr>
+                    <td class="title" scope="row"><h2>{{ key }}</h2></td>
+                    {# uWSGI allows to use options without values if value = true #}
+                    <td>{% if value %}{{ value }}{% else %}true{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <header class="nice-padding"><h2>{% trans 'Magic table' %}</h2></header>
+        {{ magic }}
+        </section>
+
+        <section id="workers">
+        <header class="nice-padding"><h2>{% trans 'Workers' %}</h2></header>
+            <table class="listing chooser">
+            <thead>
+                <tr>
+                    <th>{% trans "id" %}</th>
+                    <th>{% trans "pid" %}</th>
+                    <th>{% trans "status" %}</th>
+                    <th>{% trans "requests" %}</th>
+                    <th>{% trans "exceptions" %}</th>
+                    <th>{% trans "signals" %}</th>
+                    <th>{% trans "running time(ms)" %}</th>
+                    <th>{% trans "avg response time(ms)" %}</th>
+                    <th>{% trans "load" %}</th>
+                    <th>{% trans "last spawn" %}</th>
+                    <th>{% trans "respawn count" %}</th>
+                    <th>{% trans "address space (vsz)" %}</th>
+                    <th>{% trans "resident memory (rss)" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for w in workers %}
+                <tr>
+                    <td>{{ w.id }}</td>
+                    <td>{{ w.pid }}</td>
+                    <td>{{ w.status }}</td>
+                    <td>{{ w.requests }}</td>
+                    <td>{{ w.exceptions }}</td>
+                    <td>{{ w.signals }}</td>
+                    <td>{{ w.running_time }}</td>
+                    <td>{{ w.avg_rt }}</td>
+                    <td>{{ w.load|floatformat:2 }} %</td>
+                    <td>{{ w.last_spawn }}</td>
+                    <td>{{ w.respawn_count }}</td>
+                    <td>{{ w.vsz|filesizeformat }}</td>
+                    <td>{{ w.rss|filesizeformat }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </section>
+
+        <section id="applications">
+        <header class="nice-padding"><h2>{% trans 'Applications' %}</h2></header>
+            <table class="listing chooser">
+            <thead>
+                <tr>
+                    <th>{% trans "#" %}</th>
+                    <th>{% trans "modifier1" %}</th>
+                    <th>{% trans "mountpoint" %}</th>
+                    <th>{% trans "interpreter" %}</th>
+                    <th>{% trans "callable" %}</th>
+                    <th>{% trans "chdir" %}</th>
+                    <th>{% trans "requests" %}</th>
+                    <th>{% trans "exceptions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for w in workers %}
+               {% for app in w.apps %}
+                <tr>
+                    <td>{{ app.id }}</td>
+                    <td>{{ app.modifier1 }}</td>
+                    <td>{{ app.mountpoint }}</td>
+                    <td>{{ app.interpreter }}</td>
+                    <td>{{ app.callable }}</td>
+                    <td>{{ app.chdir }}</td>
+                    <td>{{ app.requests }}</td>
+                    <td>{{ app.exceptions }}</td>
+                </tr>
+               {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+        </section>
+        <section id="spooler">
+        <header class="nice-padding"><h2>{% trans 'Spooler' %}</h2></header>
+            <table class="listing chooser">
+            <thead>
+                <tr>
+                    <th>{% trans "job filename" %}</th>
+                    <th>{% trans "environment" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for j in jobs %}
+            <tr>
+                <td align="left">{{ j.file }}</td>
+                <td align="left">{{ j.env }}</td>
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+        </section>
+</div>
+
+
+
+<footer>
+  <ul>
+    {% if masterpid %}
+      <li class="actions">
+          <a class="button no bicolor icon icon-repeat" href="{% url 'uwsgi_reload' %}">{% trans 'Gracefully reload uWSGI' %}</a>
+      </li>
+      <li class="actions">
+        <a class="button bicolor icon icon-bin" href="{% url 'uwsgi_cache_clear' %}">{% trans 'Clear uWSGI cache' %}</a>
+      </li>
+    {% endif %}
+      <li class="meta">
+          <p class="modified"><a target="_blank" href="https://github.com/unbit/uwsgi">{% trans "uWSGI version" %} {{ version }}</a> running @ {{ hostname }}</p>
+      </li>
+  </ul>
+</footer>
+
+
+{% endblock %}
+{% endif %}

@@ -87,7 +87,6 @@ class Vassal(models.Model):
 
 
     class Meta:
-        app_label = 'django_uwsgi'
         verbose_name = _("Emperor's Vassal")
         verbose_name_plural = _("Emperor's Vassals")
         db_table = 'vassals'

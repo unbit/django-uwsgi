@@ -5,11 +5,16 @@ import os
 import sys
 
 
+root = os.getcwd()
+django_project = os.path.basename(root)
+
+
 class Command(BaseCommand):
     help = "Runs this project as a uWSGI application. Requires the uwsgi binary in system path."
 
     http_port = '8000'
     socket_addr = None
+
 
     def handle(self, *args, **options):
         for arg in args:
@@ -28,12 +33,12 @@ class Command(BaseCommand):
             os.environ['UWSGI_PLUGINS'] = 'python%d%d:python' % (sys.version_info[0], sys.version_info[1])
 
         # load the Django WSGI handler
-        os.environ['UWSGI_MODULE'] = 'django.core.handlers.wsgi:WSGIHandler()'
+        os.environ['UWSGI_MODULE'] = '%s.wsgi' % django_project
         # DJANGO settings
         if options['settings']:
             os.environ['DJANGO_SETTINGS_MODULE'] = options['settings']
         else:
-            os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+            os.environ['DJANGO_SETTINGS_MODULE'] = '%s.settings' % django_project
 
         # bind the http server to the default port
         if self.http_port:
@@ -41,8 +46,8 @@ class Command(BaseCommand):
         elif self.socket_addr:
             os.environ['UWSGI_SOCKET'] = self.socket_addr
 
-        # map admin static files
-        os.environ['UWSGI_STATIC_MAP'] = '%s=%s' % (settings.ADMIN_MEDIA_PREFIX, os.path.join(django.__path__[0], 'contrib', 'admin', 'media'))
+        # map static files
+        os.environ['UWSGI_STATIC_MAP'] = '%s=%s' % (settings.STATIC_URL, settings.STATIC_ROOT)
         # remove sockets/pidfile at exit
         os.environ['UWSGI_VACUUM'] = '1'
         # retrieve/set the PythonHome
@@ -53,8 +58,6 @@ class Command(BaseCommand):
         os.environ['UWSGI_THREADS'] = '8'
         # enable the master process
         os.environ['UWSGI_MASTER'] = '1'
-        # use uWSGI python module aliasing to fix the PYTHONPATH
-        os.environ['UWSGI_PYMODULE_ALIAS'] = '%s=./' % os.path.basename(os.getcwd())
         # exec the uwsgi binary
         os.execvp('uwsgi', ('uwsgi',))
 

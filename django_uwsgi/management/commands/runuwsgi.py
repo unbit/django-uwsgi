@@ -1,4 +1,3 @@
-import django
 from django.core.management.base import BaseCommand
 from django.conf import settings
 import os
@@ -40,11 +39,15 @@ class Command(BaseCommand):
         else:
             os.environ['DJANGO_SETTINGS_MODULE'] = '%s.settings' % django_project
 
+        # set protocol as uwsgi
+        os.environ['UWSGI_PROTOCOL'] = 'uwsgi'
+
+
         # bind the http server to the default port
         if self.http_port:
-            os.environ['UWSGI_HTTP'] = ':%s' % self.http_port
+            os.environ['UWSGI_HTTP_SOCKET'] = ':%s' % self.http_port
         elif self.socket_addr:
-            os.environ['UWSGI_SOCKET'] = self.socket_addr
+            os.environ['UWSGI_UWSGI_SOCKET'] = self.socket_addr
         # set process names
         os.environ['UWSGI_AUTO_PROCNAME'] = '1'
         os.environ['UWSGI_PROCNAME_PREFIX_SPACED'] = '[uWSGI %s]' % django_project
@@ -53,13 +56,14 @@ class Command(BaseCommand):
         # retrieve/set the PythonHome
         os.environ['UWSGI_PYHOME'] = sys.prefix
         # increase buffer size a bit
-        os.environ['UWSGI_BUFFER_SIZE'] = '8192'
+        os.environ['UWSGI_BUFFER_SIZE'] = '65535'
         # add threads for concurrency
         os.environ['UWSGI_ENABLE_THREADS'] = '1'
         os.environ['UWSGI_LAZY_APPS'] = '1'
         os.environ['UWSGI_SINGLE_INTERPRETER'] = '1'
+        os.environ['UWSGI_AUTOLOAD'] = '1'
         # set 10 workers and cheaper to number of cpus
-        os.environ['UWSGI_WORKERS'] = '10'
+        os.environ['UWSGI_WORKERS'] = '12'
         os.environ['UWSGI_CHEAPER'] = str(multiprocessing.cpu_count())
         # enable the master process
         os.environ['UWSGI_MASTER'] = '1'
@@ -67,12 +71,15 @@ class Command(BaseCommand):
         os.environ['UWSGI_UID'] = str(os.getuid())
         os.environ['UWSGI_GID'] = str(os.getgid())
         # run spooler for mail task
-        os.environ['UWSGI_SPOOLER'] = '/tmp'
-        os.environ['UWSGI_SPOOLER_IMPORT'] = 'django_uwsgi.task'
+        if 'django_uwsgi' in settings.EMAIL_BACKEND:
+            os.environ['UWSGI_SPOOLER'] = '/tmp'
+            os.environ['UWSGI_SPOOLER_IMPORT'] = 'django_uwsgi.task'
+        # os.environ['UWSGI_CACHE2'] = 'name=default,items=20000,keysize=128,blocksize=4096'
         if settings.DEBUG:
             # map static files
             os.environ['UWSGI_STATIC_MAP'] = '%s=%s' % (settings.STATIC_URL, settings.STATIC_ROOT)
             os.environ['UWSGI_PY_AUTORELOAD'] = '2'
+            os.environ['UWSGI_PRINT_CONFIG'] = '1'
         # exec the uwsgi binary
         os.execvp('uwsgi', ('uwsgi',))
 
@@ -80,6 +87,6 @@ class Command(BaseCommand):
     def usage(self, subcomand):
         return r"""
 run this project on the uWSGI server
-  http=PORT		run the embedded http server on port PORT
-  socket=ADDR		bind the uwsgi server on address ADDR (this will disable the http server)
+  http=PORT run the embedded http server on port PORT
+  socket=ADDR bind the uwsgi server on address ADDR (this will disable the http server)
         """

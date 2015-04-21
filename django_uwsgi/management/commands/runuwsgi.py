@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 import os
 import sys
-
+import multiprocessing
 
 root = os.getcwd()
 django_project = os.path.basename(root)
@@ -45,9 +45,9 @@ class Command(BaseCommand):
             os.environ['UWSGI_HTTP'] = ':%s' % self.http_port
         elif self.socket_addr:
             os.environ['UWSGI_SOCKET'] = self.socket_addr
-
-        # map static files
-        os.environ['UWSGI_STATIC_MAP'] = '%s=%s' % (settings.STATIC_URL, settings.STATIC_ROOT)
+        # set process names
+        os.environ['UWSGI_AUTO_PROCNAME'] = '1'
+        os.environ['UWSGI_PROCNAME_PREFIX_SPACED'] = '[uWSGI %s]' % django_project
         # remove sockets/pidfile at exit
         os.environ['UWSGI_VACUUM'] = '1'
         # retrieve/set the PythonHome
@@ -55,11 +55,27 @@ class Command(BaseCommand):
         # increase buffer size a bit
         os.environ['UWSGI_BUFFER_SIZE'] = '8192'
         # add threads for concurrency
-        os.environ['UWSGI_THREADS'] = '8'
+        os.environ['UWSGI_ENABLE_THREADS'] = '1'
+        os.environ['UWSGI_LAZY_APPS'] = '1'
+        os.environ['UWSGI_SINGLE_INTERPRETER'] = '1'
+        # set 10 workers and cheaper to number of cpus
+        os.environ['UWSGI_WORKERS'] = '10'
+        os.environ['UWSGI_CHEAPER'] = str(multiprocessing.cpu_count())
         # enable the master process
         os.environ['UWSGI_MASTER'] = '1'
+        # set uid and gid
+        os.environ['UWSGI_UID'] = str(os.getuid())
+        os.environ['UWSGI_GID'] = str(os.getgid())
+        # run spooler for mail task
+        os.environ['UWSGI_SPOOLER'] = '/tmp'
+        os.environ['UWSGI_SPOOLER_IMPORT'] = 'django_uwsgi.task'
+        if settings.DEBUG:
+            # map static files
+            os.environ['UWSGI_STATIC_MAP'] = '%s=%s' % (settings.STATIC_URL, settings.STATIC_ROOT)
+            os.environ['UWSGI_PY_AUTORELOAD'] = '2'
         # exec the uwsgi binary
         os.execvp('uwsgi', ('uwsgi',))
+
 
     def usage(self, subcomand):
         return r"""

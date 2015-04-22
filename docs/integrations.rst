@@ -18,12 +18,13 @@ If you're using `django-debug-toolbar`_, you can add:
 
 
 Wagtail
-=======
+-------
 
-If you're using `Wagtail`_, you can add:
+If you're using `Wagtail`_:
 
-There is `wagtail_hooks.py` file will be handled by `Wagtail`_
-And you don't need to add django_uwsgi in urls.py
+There is `wagtail_hooks.py` file available and `Wagtail`_ will read it automatically
+
+And you don't have to add `django_uwsgi` into urls.py
 
 `Wagtail`_ admin interface:
 

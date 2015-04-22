@@ -82,7 +82,7 @@ class Vassal(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = get_valid_filename(slugify(self.title) + self.extension)
-        self.ts = time()
+        self.ts = time.time()
         super(Vassal, self).save(*args, **kwargs)
 
 

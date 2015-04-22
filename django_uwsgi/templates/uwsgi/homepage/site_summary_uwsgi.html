@@ -1,5 +1,4 @@
 {% load i18n wagtailadmin_tags %}
-
 <li class="icon icon-cog">
     <a href="{% url 'uwsgi_index' %}">
     {% blocktrans count counter=workers with workers|intcomma as total %}

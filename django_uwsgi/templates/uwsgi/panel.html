@@ -7,7 +7,7 @@
 <div id="content-main" class="inline-related tabular">
     <div class="module">
     <h4>{% trans 'Status' %}</h4>
-        <table class="listing chooser">
+        <table>
             <thead>
                 <tr>
                     <th>Option</th>
@@ -17,7 +17,7 @@
             <tbody>
                 {% for key, value in stats %}
                 <tr class="{% cycle 'row1' 'row2' %}">
-                    <td class="title" scope="row"><h2>{{ key }}</h2></td>
+                    <td>{{ key }}</td>
                     <td>{{ value }}</td>
                 </tr>
                 {% endfor %}
@@ -26,7 +26,7 @@
     </div>
     <div class="module">
     <h4>{% trans 'Options' %}</h4>
-        <table class="listing chooser">
+        <table>
             <thead>
                 <tr>
                     <th>Option</th>
@@ -36,7 +36,7 @@
             <tbody>
                 {% for key, value in options %}
                 <tr class="{% cycle 'row1' 'row2' %}">
-                    <td class="title" scope="row"><h4>{{ key }}</h4></td>
+                    <td>{{ key }}</td>
                     <td>{{ value }}</td>
                 </tr>
                 {% endfor %}
@@ -46,7 +46,7 @@
 
     <div class="module balanced">
     <h4>{% trans 'Workers' %}</h4>
-        <table class="listing chooser">
+        <table>
             <thead>
                 <tr>
                     <th>id</th>
@@ -82,8 +82,41 @@
         </table>
     </div>
     <div class="module balanced">
+        <h4>{% trans 'Applications' %}</h4>
+        <table>
+            <thead>
+            <tr>
+                <th>{% trans "#" %}</th>
+                <th>{% trans "modifier1" %}</th>
+                <th>{% trans "mountpoint" %}</th>
+                <th>{% trans "interpreter" %}</th>
+                <th>{% trans "callable" %}</th>
+                <th>{% trans "chdir" %}</th>
+                <th>{% trans "requests" %}</th>
+                <th>{% trans "exceptions" %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for w in workers %}
+                {% for app in w.apps %}
+                    <tr>
+                        <td>{{ app.id }}</td>
+                        <td>{{ app.modifier1 }}</td>
+                        <td>{{ app.mountpoint }}</td>
+                        <td>{{ app.interpreter }}</td>
+                        <td>{{ app.callable }}</td>
+                        <td>{{ app.chdir }}</td>
+                        <td>{{ app.requests }}</td>
+                        <td>{{ app.exceptions }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="module balanced">
     <h4>{% trans 'Spooler jobs' %}</h4>
-        <table class="listing chooser">
+        <table>
 
             <thead>
                 <tr>

@@ -4,6 +4,14 @@ django-uwsgi
 Django related examples/tricks/modules for uWSGI
 
 
+Screenshots
+~~~~~~~~~~~
+
+`django-debug-toolbar <http://django-debug-toolbar.readthedocs.org/en/latest/>`_ panel
+
+
+`Wagtail <https://github.com/torchbox/wagtail>`_ admin interface:
+
 
 Documentation
 ~~~~~~~~~~~~~

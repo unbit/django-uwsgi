@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from . import uwsgi
 
 
-class uWSGIPanel(Panel):
+class UwsgiPanel(Panel):
     """uWSGI Debug Toolbar Panel"""
 
     title = _('uWSGI Status')

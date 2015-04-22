@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.conf import settings
+from django.apps import apps
 import os
 import sys
 import multiprocessing
@@ -40,6 +41,7 @@ class Command(BaseCommand):
             os.environ['UWSGI_HTTP_SOCKET'] = ':%s' % self.http_port
         elif self.socket_addr:
             os.environ['UWSGI_UWSGI_SOCKET'] = self.socket_addr
+            os.environ['UWSGI_CHMOD_SOCKET'] = '664'
         # set process names
         os.environ['UWSGI_AUTO_PROCNAME'] = 'true'
         os.environ['UWSGI_PROCNAME_PREFIX_SPACED'] = '[uWSGI %s]' % django_project
@@ -49,7 +51,7 @@ class Command(BaseCommand):
         os.environ['UWSGI_VIRTUALENV'] = sys.prefix
         # add project to python path
         os.environ['UWSGI_PP'] = root
-        
+
         os.environ['UWSGI_POST_BUFFERING'] = '1048576'
         os.environ['UWSGI_RELOAD_ON_RSS'] = '300'
         # increase buffer size a bit
@@ -59,7 +61,7 @@ class Command(BaseCommand):
         os.environ['UWSGI_LAZY_APPS'] = 'true'
         os.environ['UWSGI_SINGLE_INTERPRETER'] = 'true'
         os.environ['UWSGI_AUTOLOAD'] = 'true'
-        # set 10 workers and cheaper to number of cpus
+        # set 12 workers and cheaper to number of cpus
         os.environ['UWSGI_WORKERS'] = '12'
         os.environ['UWSGI_CHEAPER'] = str(multiprocessing.cpu_count())
         # enable the master process
@@ -77,23 +79,23 @@ class Command(BaseCommand):
         os.environ['UWSGI_UID'] = str(os.getuid())
         os.environ['UWSGI_GID'] = str(os.getgid())
         # run spooler for mail task
-        if 'django_uwsgi' in settings.EMAIL_BACKEND:
-            os.environ['UWSGI_SPOOLER'] = '/tmp'
-            os.environ['UWSGI_SPOOLER_IMPORT'] = 'django_uwsgi.task'
+        # if 'django_uwsgi' in settings.EMAIL_BACKEND:
+        #     os.environ['UWSGI_SPOOLER'] = '/tmp'
+        #     os.environ['UWSGI_SPOOLER_IMPORT'] = 'django_uwsgi.task'
         # TODO: Figure out cache
-        # os.environ['UWSGI_CACHE2'] = 'name=default,items=20000,keysize=128,blocksize=4096'
+        os.environ['UWSGI_CACHE2'] = 'name=%s,items=20000,keysize=128,blocksize=4096' % django_project
         if settings.DEBUG:
-            # map static files
+            # map and serve static files
             os.environ['UWSGI_STATIC_MAP'] = '%s=%s' % (settings.STATIC_URL, settings.STATIC_ROOT)
             os.environ['UWSGI_PY_AUTORELOAD'] = '2'
-            os.environ['UWSGI_SHOW_CONFIG'] = 'true'
         # exec the uwsgi binary
-        os.execvp('uwsgi', ('uwsgi',))
+        if apps.ready:
+            os.execvp('uwsgi', ('uwsgi',))
 
 
     def usage(self, subcomand):
         return r"""
-run this project on the uWSGI server
+  run this project on the uWSGI server
   http=PORT run the embedded http server on port PORT
   socket=ADDR bind the uwsgi server on address ADDR (this will disable the http server)
         """

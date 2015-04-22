@@ -1,6 +1,5 @@
 from django.contrib import admin
-from django_uwsgi.emperor.models import Vassal
-
+from .models import Vassal
 
 
 class VassalAdmin(admin.ModelAdmin):

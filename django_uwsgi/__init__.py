@@ -13,4 +13,4 @@ except ImportError:
     import pickle
 
 
-default_app_config = 'django_uwsgi.apps.DjangouWSGIConfig'
+default_app_config = 'django_uwsgi.apps.DjangoUwsgiConfig'

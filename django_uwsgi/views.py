@@ -5,22 +5,21 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View, TemplateView
 
 from django.core.exceptions import PermissionDenied
-from django.conf import settings
+from django.apps import apps
 from . import uwsgi
 
 
-class uWSGIStatus(TemplateView):
+class UwsgiStatus(TemplateView):
 
     """uWSGI Status View"""
 
-    if ('wagtail.wagtailadmin' in settings.INSTALLED_APPS):
+    if apps.is_installed('wagtail.wagtailadmin'):
         template_name = 'uwsgi/wagtail_uwsgi.html'
     else:
         template_name = 'uwsgi/uwsgi.html'
 
-
     def get_context_data(self, **kwargs):
-        context = super(uWSGIStatus, self).get_context_data(**kwargs)
+        context = super(UwsgiStatus, self).get_context_data(**kwargs)
         if uwsgi is None:
             context['unavailable'] = True
             return context
@@ -30,7 +29,7 @@ class uWSGIStatus(TemplateView):
             return context
 
 
-class uWSGICacheClear(View):
+class UwsgiCacheClear(View):
 
     """Clear uWSGI Cache View"""
 
@@ -47,7 +46,7 @@ class uWSGICacheClear(View):
         return HttpResponseRedirect(reverse_lazy('uwsgi_index'))
 
 
-class uWSGIReload(View):
+class UwsgiReload(View):
 
     """Reload uWSGI View"""
 

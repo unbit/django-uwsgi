@@ -6,7 +6,7 @@ from . import pickle
 
 
 BACKEND = getattr(settings, 'UWSGI_EMAIL_BACKEND',
-                  'django.core.mail.backends.console.EmailBackend')
+                  'django.core.mail.backends.smtp.EmailBackend')
 
 
 @spool

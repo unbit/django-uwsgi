@@ -11,6 +11,9 @@ You can view the code of this project or fork it (please, send pull requests), a
    installation
    configuration
    decorators
+   email
+   cache
+   commands
    todo
    changelog
    contributing

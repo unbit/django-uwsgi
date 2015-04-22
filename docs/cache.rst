@@ -5,7 +5,10 @@ Installation
 ------------
 
 change settings to:
+
+
 .. code-block:: py
+
     CACHES = {
         'default': {
             'BACKEND': 'django_uwsgi.cache.UwsgiCache',
@@ -14,6 +17,7 @@ change settings to:
             'LOCATION': 'foobar'
         }
     }
+
 
 Settings
 --------

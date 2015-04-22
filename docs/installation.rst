@@ -1,5 +1,5 @@
-Installing Django-uWSGI
-~~~~~~~~~~~~~~~~~~~~~~~
+Installation
+============
 
 django-uwsgi is easy installable via pip:
 

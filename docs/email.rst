@@ -1,5 +1,5 @@
-uWSGI Email Backend
-~~~~~~~~~~~~~~~~~~~
+Email Backend
+=============
 
 A Django backend for e-mail delivery using uWSGI Spool to queue deliveries.
 

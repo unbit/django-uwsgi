@@ -1,5 +1,5 @@
-uWSGI Cache Backend
-~~~~~~~~~~~~~~~~~~~
+Cache Backend
+=============
 
 Installation
 ------------

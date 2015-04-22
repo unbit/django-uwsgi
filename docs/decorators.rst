@@ -1,5 +1,5 @@
-Django-uWSGI decorators
-~~~~~~~~~~~~~~~~~~~~~~~
+Decorators
+==========
 
 `The uWSGI API <http://uwsgi-docs.readthedocs.org/en/latest/PythonModule.html>`_ is very low-level, as it must be language-independent.
 

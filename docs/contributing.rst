@@ -1,5 +1,5 @@
-Contributing to Django-uWSGI
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Contributing
+============
 
 
 

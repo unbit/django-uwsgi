@@ -1,5 +1,5 @@
-Django-uWSGI Features
-~~~~~~~~~~~~~~~~~~~~~
+Features
+========
 
 * Admin page with `uWSGI`_ stats (options to reload/stop uWSGI, clear uWSGI cache)
 * uWSGI Cache backend for Django

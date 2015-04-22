@@ -1,5 +1,5 @@
-Django-uWSGI management commands
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Management Commands
+===================
 
 runuwsgi
 --------
@@ -12,8 +12,7 @@ runuwsgi options:
 -----------------
 
 http
-----
-just 
+---- 
 
 .. code-block:: sh
 
@@ -30,4 +29,4 @@ socket
 Other options
 -------------
 
-Any other options can be passed via environment variables, prefixed with UWSGI_
+Any other options can be passed via environment variables, prefixed with `UWSGI_`

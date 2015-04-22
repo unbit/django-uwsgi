@@ -1,5 +1,5 @@
-Things Todo for Django-uWSGI
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Todo
+====
 
 * Tests
 * Create ``stats.py`` and and use it to get uWSGI stats in ``views.py`` and ``panels.py`` or by some other application(more DRY)

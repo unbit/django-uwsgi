@@ -20,7 +20,6 @@ def get_uwsgi_stats():
             jobs.append({'file': j, 'env': uwsgi.parsefile(j)})
 
     uwsgi_stats.update({
-        'uwsgi': uwsgi,
         'version': uwsgi.version,
         'hostname': uwsgi.hostname,
         'magic': uwsgi.magic_table,
@@ -38,8 +37,7 @@ def get_uwsgi_stats():
             ('cwd', os.getcwd()),
             ('logsize', uwsgi.logsize()),
             ('cache_exists', uwsgi.cache_exists),
-            ('spooler_pid', uwsgi.spooler_pid()
-             if uwsgi.opt.get('spooler') else _('disabled')),
+            ('spooler_pid', uwsgi.spooler_pid() if uwsgi.opt.get('spooler') else _('disabled')),
             ('threads', _('enabled') if uwsgi.has_threads else _('disabled'))
         ],
         'options': uwsgi.opt.items(),

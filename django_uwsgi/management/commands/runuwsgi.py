@@ -78,16 +78,20 @@ class Command(BaseCommand):
         # set uid and gid
         os.environ['UWSGI_UID'] = str(os.getuid())
         os.environ['UWSGI_GID'] = str(os.getgid())
-        # run spooler for mail task
-        # if 'django_uwsgi' in settings.EMAIL_BACKEND:
-        #     os.environ['UWSGI_SPOOLER'] = '/tmp'
-        #     os.environ['UWSGI_SPOOLER_IMPORT'] = 'django_uwsgi.task'
         # TODO: Figure out cache
         os.environ['UWSGI_CACHE2'] = 'name=%s,items=20000,keysize=128,blocksize=4096' % django_project
         if settings.DEBUG:
+            if apps.is_installed('configurations'):
+                os.environ.setdefault('DJANGO_CONFIGURATION', 'Development')
+                import configurations
+                configurations.setup()
             # map and serve static files
             os.environ['UWSGI_STATIC_MAP'] = '%s=%s' % (settings.STATIC_URL, settings.STATIC_ROOT)
             os.environ['UWSGI_PY_AUTORELOAD'] = '2'
+        # run spooler for mail task
+        if 'django_uwsgi' in settings.EMAIL_BACKEND:
+            os.environ['UWSGI_SPOOLER'] = '/tmp'
+            os.environ['UWSGI_SPOOLER_IMPORT'] = 'django_uwsgi.task'
         # exec the uwsgi binary
         if apps.ready:
             os.execvp('uwsgi', ('uwsgi',))

@@ -1,5 +1,5 @@
-Management Commands
-===================
+Management Command
+==================
 
 runuwsgi
 --------

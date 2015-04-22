@@ -13,12 +13,12 @@ You can view the code of this project or fork it (please, send pull requests), a
    decorators
    email
    cache
-   commands
+   command
    integrations
+   screenshots
    todo
    changelog
    contributing
-   screenshots
 
 
 

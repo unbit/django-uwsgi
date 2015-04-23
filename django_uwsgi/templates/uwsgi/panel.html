@@ -10,13 +10,13 @@
         <table>
             <thead>
                 <tr>
-                    <th>Option</th>
-                    <th>Value</th>
+                    <th>{% trans "Option" %}</th>
+                    <th>{% trans "Value" %}</th>
                 </tr>
             </thead>
             <tbody>
                 {% for key, value in stats %}
-                <tr class="{% cycle 'row1' 'row2' %}">
+                <tr class="{% cycle 'djDebugOdd' 'djDebugEven' %}">
                     <td>{{ key }}</td>
                     <td>{{ value }}</td>
                 </tr>
@@ -29,13 +29,13 @@
         <table>
             <thead>
                 <tr>
-                    <th>Option</th>
-                    <th>Value</th>
+                    <th>{% trans "Option" %}</th>
+                    <th>{% trans "Value" %}</th>
                 </tr>
             </thead>
             <tbody>
                 {% for key, value in options %}
-                <tr class="{% cycle 'row1' 'row2' %}">
+                <tr class="{% cycle 'djDebugOdd' 'djDebugEven' %}">
                     <td>{{ key }}</td>
                     <td>{{ value }}</td>
                 </tr>
@@ -49,28 +49,32 @@
         <table>
             <thead>
                 <tr>
-                    <th>id</th>
-                    <th>pid</th>
-                    <th>status</th>
-                    <th>requests</th>
-                    <th>exceptions</th>
-                    <th>running time (milliseconds)</th>
-                    <th>load</th>
-                    <th>last spawn</th>
-                    <th>respawn count</th>
-                    <th>address space (vsz)</th>
-                    <th>resident memory (rss)</th>
+                    <th>{% trans "id" %}</th>
+                    <th>{% trans "pid" %}</th>
+                    <th>{% trans "status" %}</th>
+                    <th>{% trans "requests" %}</th>
+                    <th>{% trans "exceptions" %}</th>
+                    <th>{% trans "signals" %}</th>
+                    <th>{% trans "running time(ms)" %}</th>
+                    <th>{% trans "avg response time(ms)" %}</th>
+                    <th>{% trans "load" %}</th>
+                    <th>{% trans "last spawn" %}</th>
+                    <th>{% trans "respawn count" %}</th>
+                    <th>{% trans "address space (vsz)" %}</th>
+                    <th>{% trans "resident memory (rss)" %}</th>
                 </tr>
             </thead>
             <tbody>
             {% for w in workers %}
-                <tr>
+                <tr class="{% cycle 'djDebugOdd' 'djDebugEven' %}">
                     <td>{{ w.id }}</td>
                     <td>{{ w.pid }}</td>
                     <td>{{ w.status }}</td>
                     <td>{{ w.requests }}</td>
                     <td>{{ w.exceptions }}</td>
+                    <td>{{ w.signals }}</td>
                     <td>{{ w.running_time }}</td>
+                    <td>{{ w.avg_rt }}</td>
                     <td>{{ w.load|floatformat:2 }} %</td>
                     <td>{{ w.last_spawn }}</td>
                     <td>{{ w.respawn_count }}</td>
@@ -99,7 +103,7 @@
             <tbody>
             {% for w in workers %}
                 {% for app in w.apps %}
-                    <tr>
+                    <tr class="{% cycle 'djDebugOdd' 'djDebugEven' %}">
                         <td>{{ app.id }}</td>
                         <td>{{ app.modifier1 }}</td>
                         <td>{{ app.mountpoint }}</td>

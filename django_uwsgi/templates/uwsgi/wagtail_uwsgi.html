@@ -2,10 +2,6 @@
 {% load i18n %}
 
 
-{% if unavailable %}
-    <h1>{% trans 'ERROR: uWSGI is not available!' %}</h1>
-{% else %}
-
 {% block titletag %}{% trans "uWSGI Status" %}{% endblock %}
 {% block bodyclass %}uwsgi{% endblock %}
 
@@ -17,25 +13,12 @@
   <li><a href="{{ page.url }}">{% trans "uWSGI Status" %}</a></li>
 </ul>
 
+{% if unavailable %}
+    {% trans 'ERROR: uWSGI is not available!' as uwsgi_header %}
+    {% include "wagtailadmin/shared/header.html" with title=uwsgi_header icon="cogs" %}
+{% else %}
     {% trans "uWSGI Status" as uwsgi_header %}
-    {% trans "Documentation" as docs %}
-    {% include "wagtailadmin/shared/header.html" with title=uwsgi_header subtitle=version icon="cogs" add_text=docs add_link="https://uwsgi-docs.rtfd.org/" tabbed="true" merged="true" %}
-{#<header class="merged tab-merged nice-padding">#}
-{#  <div class="row row-flush">#}
-{#      <div class="left col9">#}
-{#          <h1 class="icon icon-cog-empty-inverse">{% trans "uWSGI Status" %} <span>running @ {{ hostname }}</span></h1>#}
-{#      </div>#}
-{#      <div class="right col3">#}
-{#        <a target="_blank" href="https://github.com/unbit/uwsgi" class="status-tag primary"><i class="fa fa-github"></i> {% trans "uWSGI version" %} {{ version }}</a>#}
-{##}
-{#          <div class="privacy-indicator public">#}
-{#             <a target="_blank" href="uwsgi-docs.rtfd.org/" class="status-tag primary  action-set-privacy">#}
-{#          <span class="label-public icon icon-view">{% trans "Documentation" %}</span>#}
-{#        </a>#}
-{#</div>#}
-{#      </div>#}
-{#  </div>#}
-{#</header>#}
+    {% include "wagtailadmin/shared/header.html" with title=uwsgi_header subtitle=version icon="cogs" tabbed="true" merged="true" %}
 
 
 <ul class="tab-nav merged">
@@ -208,6 +191,6 @@
   </ul>
 </footer>
 
+{% endif %}
 
 {% endblock %}
-{% endif %}

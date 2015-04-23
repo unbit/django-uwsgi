@@ -3,7 +3,10 @@
 
 {% block title %}{% trans "uWSGI Stats" %}{% endblock %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />{% endblock %}
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
+{% endblock %}
 
 {% if not is_popup %}
 {% block breadcrumbs %}

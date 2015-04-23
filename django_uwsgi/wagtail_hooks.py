@@ -8,8 +8,8 @@ from . import uwsgi, urls
 
 
 class UwsgiSummaryItem(SummaryItem):
-    order = 300
-    template = 'uwsgi/homepage/site_summary_uwsgi.html'
+    order = 800
+    template = 'uwsgi/wagtail_dashboard_item.html'
 
     def get_context(self):
         if uwsgi is None:

@@ -9,15 +9,14 @@ Screenshots
 
 `django-debug-toolbar <http://django-debug-toolbar.readthedocs.org/en/latest/>`_ panel
 
-.. image:: docs/screenshots/screenshot1.png
+.. image:: https://github.com/unbit/django-uwsgi/raw/master/docs/screenshots/screenshot1.png
 
 
 `Wagtail <https://github.com/torchbox/wagtail>`_ admin interface:
 
-.. image:: docs/screenshots/screenshot2.png
+.. image:: https://github.com/unbit/django-uwsgi/raw/master/docs/screenshots/screenshot2.png
 
-.. image:: docs/screenshots/screenshot3.png
-
+.. image:: https://github.com/unbit/django-uwsgi/raw/master/docs/screenshots/screenshot3.png
 
 Documentation
 ~~~~~~~~~~~~~

@@ -26,9 +26,9 @@ Documentation
 Contributors
 ~~~~~~~~~~~~
 
-See `CONTRIBUTORS <https://github.com/unbit/django-uwsgi/blob/master/CONTRIBUTORS>`_
+See `CONTRIBUTORS <https://github.com/unbit/django-uwsgi/raw/master/CONTRIBUTORS>`_
 
 License
 ~~~~~~~
 
-`MIT <https://github.com/unbit/django-uwsgi/blob/master/LICENSE>`_
+`MIT <https://github.com/unbit/django-uwsgi/raw/master/LICENSE>`_

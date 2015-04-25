@@ -14,6 +14,7 @@ You can view the code of this project or fork it (please, send pull requests), a
    email
    cache
    command
+   emperor
    integrations
    screenshots
    todo

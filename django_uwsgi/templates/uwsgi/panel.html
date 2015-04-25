@@ -37,7 +37,8 @@
                 {% for key, value in options %}
                 <tr class="{% cycle 'djDebugOdd' 'djDebugEven' %}">
                     <td><a href="http://uwsgi-docs.readthedocs.org/en/latest/Options.html#{{ key }}">{{ key }}</a></td>
-                    <td>{{ value }}</td>
+                    {# uWSGI allows to use options without values if value = true #}
+                    <td>{% if value %}{{ value }}{% else %}true{% endif %}</td>
                 </tr>
                 {% endfor %}
             </tbody>

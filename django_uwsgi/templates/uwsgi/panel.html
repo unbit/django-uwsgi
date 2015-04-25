@@ -36,7 +36,7 @@
             <tbody>
                 {% for key, value in options %}
                 <tr class="{% cycle 'djDebugOdd' 'djDebugEven' %}">
-                    <td>{{ key }}</td>
+                    <td><a href="http://uwsgi-docs.readthedocs.org/en/latest/Options.html#{{ key }}">{{ key }}</a></td>
                     <td>{{ value }}</td>
                 </tr>
                 {% endfor %}

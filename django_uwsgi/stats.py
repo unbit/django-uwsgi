@@ -14,7 +14,7 @@ def get_uwsgi_stats():
         w['load'] = w['running_time'] / total_load / 10 / len(workers)
         w['last_spawn'] = datetime.fromtimestamp(w['last_spawn'])
     jobs = []
-    if uwsgi.opt['spooler']:
+    if uwsgi.opt.get('spooler'):
         spooler_jobs = uwsgi.spooler_jobs()
         for j in spooler_jobs:
             jobs.append({'file': j, 'env': uwsgi.parsefile(j)})

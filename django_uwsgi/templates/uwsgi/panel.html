@@ -4,6 +4,17 @@
 {% else %}
 
 
+<style>
+    body.app-django_uwsgi .submit-row a.button {
+        display: inline-block;
+    }
+
+    #djDebug .submit-row {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+</style>
+
 <div id="content-main" class="inline-related tabular">
     <div class="module">
     <h4>{% trans 'Status' %}</h4>
@@ -142,8 +153,8 @@
 
     {% if masterpid %}
     <div class="submit-row">
-        <a href="{% url 'uwsgi_reload' %}">{% trans 'Gracefully reload uWSGI' %}</a>
-        <a href="{% url 'uwsgi_cache_clear' %}">{% trans 'Clear uWSGI cache' %}</a>
+        <a href="{% url 'uwsgi_reload' %}" class="button">{% trans 'Gracefully reload uWSGI' %}</a>
+        <a href="{% url 'uwsgi_cache_clear' %}" class="button">{% trans 'Clear uWSGI cache' %}</a>
     </div>
     {% endif %}
 

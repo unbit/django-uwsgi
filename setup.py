@@ -18,7 +18,7 @@ setup(
     long_description=open('README.rst').read(),
     url='http://github.com/unbit/django-uwsgi',
     author='Eugene MechanisM',
-    author_email='eugene@mechanism.name',
+    author_email='eugene@mechanism.pro',
     license='MIT',
     zip_safe=False,
     classifiers=[
@@ -30,7 +30,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Internet :: WWW/HTTP :: WSGI',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',

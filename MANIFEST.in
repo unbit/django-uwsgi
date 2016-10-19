@@ -1,5 +1,5 @@
 include CONTRIBUTORS LICENSE *.rst
-recursive-include django_uwsgi *
+recursive-include django_uwsgi *.html
 recursive-include docs Makefile conf.py requirements-docs.txt *.rst *.png
 recursive-exclude * __pycache__
 recursive-exclude * *.py[cod]

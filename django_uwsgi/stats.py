@@ -11,6 +11,7 @@ def get_uwsgi_stats():
     total_load = time.time() - uwsgi.started_on
     for w in workers:
         w['running_time'] = w['running_time'] / 1000
+        w['avg_rt'] = w['avg_rt'] / 1000
         w['load'] = w['running_time'] / total_load / 10 / len(workers)
         w['last_spawn'] = datetime.fromtimestamp(w['last_spawn'])
     jobs = []

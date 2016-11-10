@@ -28,7 +28,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 project = u'django-uwsgi'
-copyright = u'2014, Eugene MechanisM'
+copyright = u'2016, Eugene MechanisM'
 
 version = __version__
 release = __version__

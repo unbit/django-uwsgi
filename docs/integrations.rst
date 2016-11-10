@@ -8,7 +8,7 @@ If you're using `django-debug-toolbar`_, you can add:
 
 .. code-block:: py
 
-    DEBUG_TOOLBAR_PANELS += ('django_uwsgi.panels.UwsgiPanel',)
+    DEBUG_TOOLBAR_PANELS += ['django_uwsgi.panels.UwsgiPanel',]
 
 
 .. _django-debug-toolbar: http://django-debug-toolbar.readthedocs.org/en/latest/
@@ -32,6 +32,9 @@ And you don't have to add `django_uwsgi` into urls.py
 
 
 .. image:: screenshots/screenshot3.png
+
+
+.. image:: screenshots/screenshot4.png
 
 
 .. _Wagtail: http://wagtail.io

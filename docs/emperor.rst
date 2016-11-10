@@ -14,7 +14,7 @@ Populate vassals via django admin interface and start uwsgi with command like:
 
 .. code-block:: sh
 
-   uwsgi --plugin emperor_pg --emperor "pg://host=127.0.0.1 user=foobar dbname=emperor;SELECT name,config,ts FROM vassals"
+   uwsgi --plugin emperor_pg --emperor "pg://host=127.0.0.1 user=foobar dbname=emperor;SELECT name,config,ts FROM vassals WHERE enabled = True"
 
 
-Each time vassal added/removed or updated - uwsgi will start/stop it or reload.
+Each time vassal added, removed, updated, enabled or disabled - uwsgi will start/stop it or reload.

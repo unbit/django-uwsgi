@@ -18,12 +18,9 @@ def get_uwsgi_stats():
     if uwsgi.opt.get('spooler'):
         spooler_jobs = uwsgi.spooler_jobs()
         for j in spooler_jobs:
-            jobs.append({'file': j, 'env': uwsgi.parsefile(j)})
-
+            jobs.append({'file': j, 'env': uwsgi.parsefile(str(j))})
     uwsgi_stats.update({
-        'version': uwsgi.version,
-        'hostname': uwsgi.hostname,
-        'magic': uwsgi.magic_table,
+        'uwsgi': uwsgi,
         'os': os.uname(),
         'masterpid': uwsgi.masterpid(),
         'stats': [
@@ -41,7 +38,6 @@ def get_uwsgi_stats():
             ('spooler_pid', uwsgi.spooler_pid() if uwsgi.opt.get('spooler') else _('disabled')),
             ('threads', _('enabled') if uwsgi.has_threads else _('disabled'))
         ],
-        'options': uwsgi.opt.items(),
         'workers': workers,
         'jobs': jobs,
     })

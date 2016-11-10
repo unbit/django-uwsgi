@@ -18,6 +18,14 @@ Screenshots
 
 .. image:: https://github.com/unbit/django-uwsgi/raw/master/docs/screenshots/screenshot3.png
 
+Emperor's Vassal Admin Panel
+
+.. image:: https://github.com/unbit/django-uwsgi/raw/master/docs/screenshots/screenshot4.png
+
+`django.contrib.admin <https://docs.djangoproject.com/en/1.10/ref/contrib/admin/>`_ interface
+
+.. image:: https://github.com/unbit/django-uwsgi/raw/master/docs/screenshots/screenshot5.png
+
 Documentation
 ~~~~~~~~~~~~~
 

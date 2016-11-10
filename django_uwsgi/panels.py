@@ -4,8 +4,9 @@ from . import uwsgi
 
 
 class UwsgiPanel(Panel):
-    """uWSGI Debug Toolbar Panel"""
-
+    '''
+    uWSGI Debug Toolbar Panel
+    '''
     title = _('uWSGI Status')
     nav_title = _('uWSGI Status')
     template = 'uwsgi/panel.html'
@@ -14,7 +15,7 @@ class UwsgiPanel(Panel):
     def nav_subtitle(self):
         if uwsgi is not None:
             status = _('Version %s, %d Workers') % (
-                uwsgi.version, uwsgi.numproc)
+                str(uwsgi.version.decode()), int(uwsgi.numproc))
         else:
             status = _('uWSGI is missing =(')
         return status

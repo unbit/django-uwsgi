@@ -9,6 +9,8 @@ Features
 * Django :doc:`command` ``runuwsgi`` (with live autoreload when DEBUG is True)
 * uWSGI config generator
 * Django CBV Mixins based on uWSGI decorators
+* Forms to send log message and signal to uWSGI via admin interface
+
 
 Some features are not added into repo or not yet implemented(See :doc:`todo`)
 

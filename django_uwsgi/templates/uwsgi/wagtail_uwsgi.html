@@ -22,15 +22,18 @@
 
 
 <ul class="tab-nav merged">
-        <li class="active"><a href="#stats" class="active">{% trans "Information" %}</a></li>
-        <li><a href="#options">{% trans "Options" %}</a></li>
-        <li><a href="#workers">{% trans "Workers" %}</a></li>
-        <li><a href="#applications">{% trans "Applications" %}</a></li>
-        <li><a href="#spooler">{% trans "Spooler" %}</a></li>
+    <li class="active"><a href="#stats" class="active">{% trans "Information" %}</a></li>
+    <li><a href="#options">{% trans "Options" %}</a></li>
+    <li><a href="#magic">{% trans "Magic Table" %}</a></li>
+    <li><a href="#workers" class="errors" data-count="{{ uwsgi.numproc }}">{% trans "Workers" %}</a></li>
+    <li><a href="#applications">{% trans "Applications" %}</a></li>
+    {% if uwsgi.spooler_jobs %}
+    <li><a href="#spooler">{% trans "Spooler" %}</a></li>
+    {% endif %}
+    <li><a href="#actions">{% trans "Actions" %}</a></li>
 </ul>
-
-<div class="tab-content">
-        <section id="stats" class="active">
+<div class="tab-content nice-padding">
+    <section id="stats" class="active">
         <header class="nice-padding"><h2>{% trans 'Information' %}</h2></header>
             <table class="listing chooser">
             <thead>
@@ -42,17 +45,18 @@
             <tbody>
                 {% for key, value in stats %}
                 <tr>
-                    <td class="title" scope="row"><h2>{{ key }}</h2></td>
+                    <td class="title" scope="row">{{ key }}</td>
                     <td>{{ value }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        </section>
-
-        <section id="options">
-        <header class="nice-padding"><h2>{% trans 'Options' %}</h2></header>
-            <table class="listing chooser">
+    </section>
+    <section id="options">
+        <header class="nice-padding">
+            <h2>{% trans 'Options' %} (<a href="http://uwsgi-docs.readthedocs.org/en/latest/Options.html">read docs</a>)</h2>
+        </header>
+        <table class="listing chooser">
             <thead>
                 <tr>
                     <th>{% trans "Option" %}</th>
@@ -60,7 +64,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for key, value in options %}
+                {% for key, value in uwsgi.opt.items %}
                 <tr>
                     <td class="title" scope="row">
                         <h2>
@@ -73,13 +77,37 @@
                 {% endfor %}
             </tbody>
         </table>
-        <header class="nice-padding"><h2>{% trans 'Magic table' %}</h2></header>
-        {{ magic }}
-        </section>
-
-        <section id="workers">
-        <header class="nice-padding"><h2>{% trans 'Workers' %}</h2></header>
-            <table class="listing chooser">
+    </section>
+    <section id="magic">
+        <header class="nice-padding">
+            <h2>{% trans 'Magic table' %} (<a href="http://uwsgi-docs.readthedocs.io/en/latest/Configuration.html#magic-variables">read docs</a>)</h2>
+        </header>
+        <table class="listing chooser">
+            <thead>
+                <tr>
+                    <th>{% trans "Option" %}</th>
+                    <th>{% trans "Value" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in uwsgi.magic_table.items %}
+                <tr>
+                    <td class="title" scope="row">
+                        <h2>
+                            {{ key }}
+                        </h2>
+                    </td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <section id="workers">
+        <header class="nice-padding">
+            <h2>{% trans 'Workers' %}</h2>
+        </header>
+        <table class="listing chooser">
             <thead>
                 <tr>
                     <th>{% trans "id" %}</th>
@@ -93,8 +121,10 @@
                     <th>{% trans "load" %}</th>
                     <th>{% trans "last spawn" %}</th>
                     <th>{% trans "respawn count" %}</th>
+                    {% if 'memory-report' in uwsgi.opt %}
                     <th>{% trans "address space (vsz)" %}</th>
                     <th>{% trans "resident memory (rss)" %}</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -111,17 +141,20 @@
                     <td>{{ w.load|floatformat:2 }} %</td>
                     <td>{{ w.last_spawn }}</td>
                     <td>{{ w.respawn_count }}</td>
+                    {% if 'memory-report' in uwsgi.opt %}
                     <td>{{ w.vsz|filesizeformat }}</td>
                     <td>{{ w.rss|filesizeformat }}</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        </section>
-
-        <section id="applications">
-        <header class="nice-padding"><h2>{% trans 'Applications' %}</h2></header>
-            <table class="listing chooser">
+    </section>
+    <section id="applications">
+        <header class="nice-padding">
+            <h2>{% trans 'Applications' %}</h2>
+        </header>
+        <table class="listing chooser">
             <thead>
                 <tr>
                     <th>{% trans "#" %}</th>
@@ -135,7 +168,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for w in workers %}
+            {% for w in uwsgi.workers %}
                {% for app in w.apps %}
                 <tr>
                     <td>{{ app.id }}</td>
@@ -151,10 +184,13 @@
             {% endfor %}
             </tbody>
         </table>
-        </section>
-        <section id="spooler">
-        <header class="nice-padding"><h2>{% trans 'Spooler' %}</h2></header>
-            <table class="listing chooser">
+    </section>
+    {% if uwsgi.spooler_jobs %}
+    <section id="spooler">
+        <header class="nice-padding">
+            <h2>{% trans 'Spooler' %}</h2>
+        </header>
+        <table class="listing chooser">
             <thead>
                 <tr>
                     <th>{% trans "job filename" %}</th>
@@ -162,35 +198,75 @@
                 </tr>
             </thead>
             <tbody>
-        {% for j in jobs %}
-            <tr>
-                <td align="left">{{ j.file }}</td>
-                <td align="left">{{ j.env }}</td>
-            </tr>
-        {% endfor %}
+                {% for job in jobs %}
+                <tr>
+                    <td align="left">{{ job.file }}</td>
+                    <td align="left">{{ job.env }}</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
-        </section>
+    </section>
+    {% endif %}
+    <section id="actions">
+        <header class="nice-padding"><h2>{% trans 'Actions' %}</h2></header>
+        <form action="{% url 'uwsgi_signal' %}" method="post">
+            {% csrf_token %}
+            <ul class="fields">
+                <li class="required">
+                    <div class="field char_field text_input">
+                        <label for="signal_number">{% trans 'Signal number' %}</label>
+                        <div class="field-content">
+                            <div class="input">
+                                <input id="signal_number" type="text" size="3" name="signal_number" required>
+                                <span></span>
+                            </div>
+                            <p class="help">{% trans 'Signal number' %}</p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <input type="submit" class="button" value="{% trans 'Send' %}">
+                </li>
+            </ul>
+        </form>
+        <form action="{% url 'uwsgi_log' %}" method="post">
+            {% csrf_token %}
+            <ul class="fields">
+                <li class="required">
+                    <div class="field char_field text_input">
+                        <label for="log_message">{% trans 'Log message' %}</label>
+                        <div class="field-content">
+                            <div class="input">
+                                <input id="log_message" type="text" size="72" name="log_message" required>
+                                <span></span>
+                            </div>
+                            <p class="help">{% trans 'Log message' %}</p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <input type="submit" class="button" value="{% trans 'Send' %}">
+                </li>
+            </ul>
+        </form>
+    </section>
 </div>
-
-
-
 <footer>
   <ul>
-    {% if masterpid %}
+    {% if uwsgi.masterpid %}
       <li class="actions">
           <a class="button no bicolor icon icon-repeat" href="{% url 'uwsgi_reload' %}">{% trans 'Gracefully reload uWSGI' %}</a>
       </li>
-      <li class="actions">
+      <li class="actions preview">
         <a class="button bicolor icon icon-bin" href="{% url 'uwsgi_cache_clear' %}">{% trans 'Clear uWSGI cache' %}</a>
       </li>
     {% endif %}
       <li class="meta">
-          <p class="modified"><a target="_blank" href="https://github.com/unbit/uwsgi">{% trans "uWSGI version" %} {{ version }}</a> running @ {{ hostname }}</p>
+          <p class="modified">
+              <a target="_blank" href="https://github.com/unbit/uwsgi" class="underlined">{% trans "uWSGI version" %} {{ uwsgi.version }}</a> running @ {{ uwsgi.hostname }}</p>
       </li>
   </ul>
 </footer>
-
 {% endif %}
-
 {% endblock %}

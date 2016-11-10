@@ -21,8 +21,6 @@ def get_uwsgi_stats():
             jobs.append({'file': j, 'env': uwsgi.parsefile(str(j))})
     uwsgi_stats.update({
         'uwsgi': uwsgi,
-        'os': os.uname(),
-        'masterpid': uwsgi.masterpid(),
         'stats': [
             ('loop', uwsgi.loop),
             ('masterpid', str(uwsgi.masterpid())),
@@ -32,6 +30,7 @@ def get_uwsgi_stats():
             ('total_requests', uwsgi.total_requests()),
             ('numproc', uwsgi.numproc),
             ('cores', uwsgi.cores),
+            ('os', os.uname()),
             ('cwd', os.getcwd()),
             ('logsize', uwsgi.logsize()),
             ('cache_exists', uwsgi.cache_exists),
@@ -39,6 +38,6 @@ def get_uwsgi_stats():
             ('threads', _('enabled') if uwsgi.has_threads else _('disabled'))
         ],
         'workers': workers,
-        'jobs': jobs,
+        'jobs': jobs
     })
     return uwsgi_stats

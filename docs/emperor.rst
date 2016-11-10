@@ -10,6 +10,9 @@ Simply add `'django_uwsgi.emperor',` into `INSTALLED_APPS`
    INSTALLED_APPS += ['django_uwsgi.emperor',]
 
 
+.. image:: screenshots/screenshot4.png
+
+
 Populate vassals via django admin interface and start uwsgi with command like:
 
 .. code-block:: sh

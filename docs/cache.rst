@@ -13,7 +13,7 @@ change settings to:
         'default': {
             'BACKEND': 'django_uwsgi.cache.UwsgiCache',
 
-            # and optionally, if you use a different cache name
+            # and optionally, if you used a different cache name
             'LOCATION': 'foobar'
         }
     }
@@ -21,11 +21,11 @@ change settings to:
 django-confy
 ------------
 
-if you're using `django-confy`, you can use url like:
+if you're using `django-confy <https://github.com/MechanisM/django-confy>`_:, you can use url like:
 
 .. code-block:: sh
     
-    CACHE_URL=uwsgi://..
+    CACHE_URL=uwsgi://foobar
 
 
 Settings

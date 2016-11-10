@@ -7,7 +7,7 @@ except ImportError:
     uwsgi = None
 
 try:
-    import cPickle as pickle
+    from six.moves import cPickle as pickle
 except ImportError:
     import pickle
 

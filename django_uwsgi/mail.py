@@ -13,6 +13,6 @@ class EmailBackend(BaseEmailBackend):
         return num_sent
 
     def _send(self, email_message):
-        from .task import send_mail
+        from .tasks import send_mail
         send_mail.spool(body=pickle.dumps(email_message, 2))
         return True

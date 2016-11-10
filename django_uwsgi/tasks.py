@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from django.core.mail import get_connection
 from django.conf import settings
 

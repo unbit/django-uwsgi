@@ -15,7 +15,10 @@ or clone it from `github <https://github.com/unbit/django-uwsgi>`_:
 
    git clone https://github.com/unbit/django-uwsgi.git
    cd django-uwsgi
-   python setup.py install
+   pip install .
+
+   # or for development
+   pip install -e .
 
 
 By default ``django-uwsgi`` doesn’t installed with uWSGI as requirement.

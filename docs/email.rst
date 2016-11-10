@@ -36,7 +36,7 @@ Example ini:
 
     plugin = spooler
     spooler = /tmp
-    spooler-import = django_uwsgi.task
+    spooler-import = django_uwsgi.tasks
 
 
 or use built in management command `runuwsgi`

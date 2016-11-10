@@ -91,7 +91,7 @@ class Command(BaseCommand):
         # run spooler for mail task
         if 'django_uwsgi' in settings.EMAIL_BACKEND:
             os.environ['UWSGI_SPOOLER'] = '/tmp'
-            os.environ['UWSGI_SPOOLER_IMPORT'] = 'django_uwsgi.task'
+            os.environ['UWSGI_SPOOLER_IMPORT'] = 'django_uwsgi.tasks'
         # exec the uwsgi binary
         if apps.ready:
             os.execvp('uwsgi', ('uwsgi',))

@@ -30,7 +30,6 @@ def get_uwsgi_stats():
             ('total_requests', uwsgi.total_requests()),
             ('numproc', uwsgi.numproc),
             ('cores', uwsgi.cores),
-            ('os', os.uname()),
             ('cwd', os.getcwd()),
             ('logsize', uwsgi.logsize()),
             ('cache_exists', uwsgi.cache_exists),

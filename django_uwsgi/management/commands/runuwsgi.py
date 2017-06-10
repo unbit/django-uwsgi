@@ -40,7 +40,7 @@ class Command(BaseCommand):
         if self.http_port:
             os.environ['UWSGI_HTTP_SOCKET'] = ':%s' % self.http_port
         elif self.socket_addr:
-            os.environ.setdefault('UWSGI_UWSGI_SOCKET', self.socket_addr)
+            os.environ['UWSGI_UWSGI_SOCKET'] = self.socket_addr
             os.environ.setdefault('UWSGI_CHMOD_SOCKET', '664')
         # set process names
         os.environ.setdefault('UWSGI_AUTO_PROCNAME', 'true')

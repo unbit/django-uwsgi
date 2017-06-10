@@ -69,7 +69,7 @@ class Command(BaseCommand):
 
         os.environ['UWSGI_NO_ORPHANS'] = 'true'
         os.environ['UWSGI_MEMORY_REPORT'] = 'true'
-        os.environ['UWSGI_DISABLE_LOGGING'] = 'true'
+        os.environ.setdefault('UWSGI_DISABLE_LOGGING', 'true')
 
         # set harakiri
         os.environ['UWSGI_HARAKIRI'] = '60'

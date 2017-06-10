@@ -38,7 +38,7 @@ class Command(BaseCommand):
 
         # bind the http server to the default port
         if self.http_port:
-            os.environ.setdefault('UWSGI_HTTP_SOCKET', ':%s' % self.http_port)
+            os.environ['UWSGI_HTTP_SOCKET'] = ':%s' % self.http_port
         elif self.socket_addr:
             os.environ.setdefault('UWSGI_UWSGI_SOCKET', self.socket_addr)
             os.environ.setdefault('UWSGI_CHMOD_SOCKET', '664')

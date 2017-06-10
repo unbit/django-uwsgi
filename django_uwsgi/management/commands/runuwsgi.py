@@ -26,7 +26,7 @@ class Command(BaseCommand):
                 self.socket_addr = v
 
         # load the Django WSGI handler
-        os.environ['UWSGI_MODULE'] = '%s.wsgi' % django_project
+        os.environ.setdefault('UWSGI_MODULE', '%s.wsgi' % django_project)
         # DJANGO settings
         if options['settings']:
             os.environ['DJANGO_SETTINGS_MODULE'] = options['settings']

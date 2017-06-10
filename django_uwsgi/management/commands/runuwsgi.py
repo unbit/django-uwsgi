@@ -29,9 +29,9 @@ class Command(BaseCommand):
         os.environ.setdefault('UWSGI_MODULE', '%s.wsgi' % django_project)
         # DJANGO settings
         if options['settings']:
-            os.environ['DJANGO_SETTINGS_MODULE'] = options['settings']
+            os.environ.setdefault('DJANGO_SETTINGS_MODULE', options['settings'])
         else:
-            os.environ['DJANGO_SETTINGS_MODULE'] = '%s.settings' % django_project
+            os.environ.setdefault('DJANGO_SETTINGS_MODULE', '%s.settings' % django_project)
 
         # set protocol as uwsgi
         os.environ['UWSGI_PROTOCOL'] = 'uwsgi'

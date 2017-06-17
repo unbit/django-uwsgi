@@ -19,11 +19,11 @@ class UwsgiStatus(TemplateView):
     else:
         template_name = 'uwsgi/uwsgi.html'
 
-    def get (self, *args, **kwargs):
+    def get (self, request, *args, **kwargs):
         if not request.user.is_superuser:
             raise PermissionDenied
             
-        return super().get(*args, **kwargs)
+        return super().get(request, *args, **kwargs)
         
     def get_context_data(self, **kwargs):
         context = super(UwsgiStatus, self).get_context_data(**kwargs)

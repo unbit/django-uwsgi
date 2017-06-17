@@ -12,13 +12,13 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 
 setup(
-    name='django-uwsgi',
+    name='django-uwsgi-alt',
     version=__version__,
     description='uWSGI stuff for Django projects',
     long_description=open('README.rst').read(),
-    url='http://github.com/unbit/django-uwsgi',
-    author='Eugene MechanisM',
-    author_email='eugene@mechanism.pro',
+    url='https://github.com/pizzapanther/django-uwsgi',
+    author='Paul Bailey',
+    author_email='paul.m.bailey@gmail.com',
     license='MIT',
     zip_safe=False,
     classifiers=[

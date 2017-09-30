@@ -1,6 +1,18 @@
 django-uwsgi
 ~~~~~~~~~~~~
 
+|release| |stats|  |lic|
+
+.. |release| image:: https://img.shields.io/pypi/v/django-uwsgi.svg
+    :target: https://pypi.python.org/pypi/django-uwsgi
+
+.. |stats| image:: https://img.shields.io/pypi/dm/django-uwsgi.svg
+    :target: https://pypi.python.org/pypi/django-uwsgi
+
+.. |lic| image:: https://img.shields.io/pypi/l/django-uwsgi.svg
+    :target: https://pypi.python.org/pypi/django-uwsgi
+
+
 Django related examples/tricks/modules for uWSGI
 
 

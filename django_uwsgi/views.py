@@ -5,8 +5,7 @@ from django.contrib import messages
 try:
     from django.urls import reverse_lazy
 except ImportError:
-    try:
-        from django.core.urlresolvers import reverse_lazy
+    from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View, TemplateView
 
 from django.core.exceptions import PermissionDenied

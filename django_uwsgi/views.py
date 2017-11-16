@@ -2,7 +2,11 @@ from __future__ import unicode_literals
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+try:
+    from django.urls import reverse_lazy
+except ImportError:
+    try:
+        from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View, TemplateView
 
 from django.core.exceptions import PermissionDenied

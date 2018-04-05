@@ -45,7 +45,7 @@ class Command(BaseCommand):
 
         # by default set 12 workers and <cpu_count> cheaper. cheaper must not
         # exceed workers. user supplied <workers> overrides default.
-        worker_count = os.environ.get('UWSGI_WORKERS', 12)
+        worker_count = int(os.environ.get('UWSGI_WORKERS', 12))
         os.environ.setdefault('UWSGI_WORKERS', str(worker_count))
         # If there is just one worker, cheaper is unnecessary.
         if worker_count > 1:

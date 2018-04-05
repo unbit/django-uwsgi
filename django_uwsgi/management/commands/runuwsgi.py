@@ -51,7 +51,7 @@ class Command(BaseCommand):
         if worker_count > 1:
             os.environ.setdefault(
                 'UWSGI_CHEAPER',
-                str(min(worker_count, multiprocessing.cpu_count()))
+                str(min(worker_count, multiprocessing.cpu_count())))
 
         # set process names
         os.environ.setdefault('UWSGI_AUTO_PROCNAME', 'true')

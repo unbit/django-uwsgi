@@ -46,12 +46,12 @@ class Command(BaseCommand):
         # by default set 12 workers and <cpu_count> cheaper. cheaper must not
         # exceed workers. user supplied <workers> overrides default.
         worker_count = int(os.environ.get('UWSGI_WORKERS', 12))
+        cpu_count = multiprocessing.cpu_count()
         os.environ.setdefault('UWSGI_WORKERS', str(worker_count))
         # If there is just one worker, cheaper is unnecessary.
         if worker_count > 1:
             os.environ.setdefault(
-                'UWSGI_CHEAPER',
-                str(min(worker_count, multiprocessing.cpu_count())))
+                'UWSGI_CHEAPER', str(min(worker_count, cpu_count)))
 
         # set process names
         os.environ.setdefault('UWSGI_AUTO_PROCNAME', 'true')

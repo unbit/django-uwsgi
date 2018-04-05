@@ -47,7 +47,11 @@ class Command(BaseCommand):
         # exceed workers. user supplied <workers> overrides default.
         worker_count = os.environ.get('UWSGI_WORKERS', 12)
         os.environ.setdefault('UWSGI_WORKERS', str(worker_count))
-        os.environ.setdefault('UWSGI_CHEAPER', str(min(worker_count, multiprocessing.cpu_count()))
+        # If there is just one worker, cheaper is unnecessary.
+        if worker_count > 1:
+            os.environ.setdefault(
+                'UWSGI_CHEAPER',
+                str(min(worker_count, multiprocessing.cpu_count()))
 
         # set process names
         os.environ.setdefault('UWSGI_AUTO_PROCNAME', 'true')

@@ -42,6 +42,17 @@ class Command(BaseCommand):
         elif self.socket_addr:
             os.environ['UWSGI_UWSGI_SOCKET'] = self.socket_addr
             os.environ.setdefault('UWSGI_CHMOD_SOCKET', '664')
+
+        # by default set 12 workers and <cpu_count> cheaper. cheaper must not
+        # exceed workers. user supplied <workers> overrides default.
+        worker_count = int(os.environ.get('UWSGI_WORKERS', 12))
+        cpu_count = multiprocessing.cpu_count()
+        os.environ.setdefault('UWSGI_WORKERS', str(worker_count))
+        # If there is just one worker, cheaper is unnecessary.
+        if worker_count > 1:
+            os.environ.setdefault(
+                'UWSGI_CHEAPER', str(min(worker_count, cpu_count)))
+
         # set process names
         os.environ.setdefault('UWSGI_AUTO_PROCNAME', 'true')
         os.environ.setdefault('UWSGI_PROCNAME_PREFIX_SPACED', '[uWSGI %s]' % django_project)
@@ -61,9 +72,6 @@ class Command(BaseCommand):
         os.environ.setdefault('UWSGI_LAZY_APPS', 'true')
         os.environ.setdefault('UWSGI_SINGLE_INTERPRETER', 'true')
         os.environ.setdefault('UWSGI_AUTOLOAD', 'true')
-        # set 12 workers and cheaper to number of cpus
-        os.environ.setdefault('UWSGI_WORKERS', '12')
-        os.environ.setdefault('UWSGI_CHEAPER', str(multiprocessing.cpu_count()))
         # enable the master process
         os.environ.setdefault('UWSGI_MASTER', 'true')
 

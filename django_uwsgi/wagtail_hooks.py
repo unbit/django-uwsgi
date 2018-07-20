@@ -1,7 +1,8 @@
 from django.utils.translation import ugettext_lazy as _
 
 from . import uwsgi, urls
-from .compat import include, url, reverse_lazy, hooks, MenuItem, SummaryItem
+from .compat import include, url, reverse_lazy
+from .wagtail_compat import hooks, MenuItem, SummaryItem
 
 
 class UwsgiSummaryItem(SummaryItem):

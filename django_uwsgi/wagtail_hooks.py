@@ -1,10 +1,8 @@
-from django.conf.urls import include, url
-from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailadmin.menu import MenuItem
-from wagtail.wagtailadmin.site_summary import SummaryItem
+
 from . import uwsgi, urls
+from .compat import include, url, reverse_lazy
+from .wagtail_compat import hooks, MenuItem, SummaryItem
 
 
 class UwsgiSummaryItem(SummaryItem):
@@ -12,10 +10,7 @@ class UwsgiSummaryItem(SummaryItem):
     template = 'uwsgi/wagtail_dashboard_item.html'
 
     def get_context(self):
-        if uwsgi is None:
-            workers = '0'
-        else:
-            workers = uwsgi.numproc
+        workers = int(uwsgi.numproc) if uwsgi else 0
         return {'workers': workers}
 
 

@@ -17,7 +17,7 @@ class UwsgiStatus(TemplateView):
     '''
     uWSGI Status View
     '''
-    if apps.is_installed('wagtail.wagtailadmin'):
+    if apps.is_installed('wagtail.admin'):
         template_name = 'uwsgi/wagtail_uwsgi.html'
     else:
         template_name = 'uwsgi/uwsgi.html'

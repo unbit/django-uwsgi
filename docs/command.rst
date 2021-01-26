@@ -31,3 +31,13 @@ Other options
 
 Any other options can be passed via environment variables, prefixed with `UWSGI_` and converted
 to upper-case, or as key-value pairs in a dictionary named `UWSGI` in settings.
+
+Options from `UWSGI` in settings are passed to uwsgi as INI, which allows passing multi-value
+options. Example:
+
+.. code-block:: python
+
+   UWSGI = {
+       "module": "my.project.wsgi",
+       "attach-daemon": ["memcached -p 11311", "celery -A my.project.tasks worker"]
+   }

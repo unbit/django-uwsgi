@@ -1,3 +1,4 @@
+from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.apps import apps
@@ -24,13 +25,6 @@ class Command(BaseCommand):
             elif k == 'socket':
                 self.http_port = None
                 self.socket_addr = v
-
-        # Preload options from settings
-        for option, value in getattr(settings, "UWSGI", {}):
-            envvar = option.upper().replace("-", "_")
-            if isinstance(value, bool):
-                value = "true" if value else "false"
-            os.environ.setdefault("UWSGI_%s" % envvar, str(value))
 
         # load the Django WSGI handler
         os.environ.setdefault('UWSGI_MODULE', '%s.wsgi' % django_project)
@@ -109,8 +103,24 @@ class Command(BaseCommand):
             os.environ.setdefault('UWSGI_SPOOLER_IMPORT', 'django_uwsgi.tasks')
         # exec the uwsgi binary
         if apps.ready:
-            os.execvp('uwsgi', ('uwsgi',))
-
+            argv = ['uwsgi']
+            # allow loading options from settings
+            opts = getattr(settings, "UWSGI", {})
+            if opts:
+                # Pass the config dict as INI file
+                r, w = os.pipe()
+                os.set_inheritable(r, True)
+                with os.fdopen(w, "w") as ini_out:
+                    print("[uwsgi]", file=ini_out)
+                    for option, values in opts.items():
+                        if not isinstance(values, (list, tuple)):
+                            values = [values]
+                        for value in values:
+                            if "\n" in value:
+                                raise ImproperlyConfigured("Line breaks are not allowed in uWSGI options.")
+                            print("%s = %s" % (option, value), file=ini_out)
+                argv += ['--ini', 'fd://%d' % r]
+            os.execvp('uwsgi', argv)
 
     def usage(self, subcomand):
         return r"""

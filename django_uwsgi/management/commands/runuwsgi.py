@@ -25,6 +25,13 @@ class Command(BaseCommand):
                 self.http_port = None
                 self.socket_addr = v
 
+        # Preload options from settings
+        for option, value in getattr(settings, "UWSGI", {}):
+            envvar = option.upper().replace("-", "_")
+            if isinstance(value, bool):
+                value = "true" if value else "false"
+            os.environ.setdefault("UWSGI_%s" % envvar, str(value))
+
         # load the Django WSGI handler
         os.environ.setdefault('UWSGI_MODULE', '%s.wsgi' % django_project)
         # DJANGO settings

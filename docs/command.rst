@@ -12,7 +12,7 @@ runuwsgi options:
 -----------------
 
 http
----- 
+----
 
 .. code-block:: sh
 
@@ -29,4 +29,5 @@ socket
 Other options
 -------------
 
-Any other options can be passed via environment variables, prefixed with `UWSGI_`
+Any other options can be passed via environment variables, prefixed with `UWSGI_` and converted
+to upper-case, or as key-value pairs in a dictionary named `UWSGI` in settings.

@@ -32,7 +32,6 @@ def get_uwsgi_stats():
             ('cores', uwsgi.cores),
             ('cwd', os.getcwd()),
             ('logsize', uwsgi.logsize()),
-            ('cache_exists', uwsgi.cache_exists),
             ('spooler_pid', uwsgi.spooler_pid() if uwsgi.opt.get('spooler') else _('disabled')),
             ('threads', _('enabled') if uwsgi.has_threads else _('disabled'))
         ],

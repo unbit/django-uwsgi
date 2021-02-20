@@ -20,9 +20,10 @@ class UwsgiPanel(Panel):
             status = _('uWSGI is missing =(')
         return status
 
-    def process_response(self, request, response):
+    def generate_stats(self, request, response):
         if uwsgi is None:
             self.record_stats({'unavailable': True})
         else:
             from .stats import get_uwsgi_stats
             self.record_stats(get_uwsgi_stats())
+    process_response = generate_stats

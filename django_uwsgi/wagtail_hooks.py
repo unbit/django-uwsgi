@@ -1,4 +1,7 @@
-from django.utils.translation import ugettext_lazy as _
+try:
+    from django.utils.translation import ugettext_lazy as _
+except ImportError:
+    from django.utils.translation import ngettext_lazy as _
 
 from . import uwsgi, urls
 from .compat import include, url, reverse_lazy

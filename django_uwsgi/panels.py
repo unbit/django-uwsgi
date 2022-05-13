@@ -1,5 +1,8 @@
 from debug_toolbar.panels import Panel
-from django.utils.translation import ugettext_lazy as _
+try:
+    from django.utils.translation import ugettext_lazy as _
+except ImportError:
+    from django.utils.translation import ngettext_lazy as _
 from . import uwsgi
 
 

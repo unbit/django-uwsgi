@@ -1,6 +1,9 @@
 import time
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+try:
+    from django.utils.translation import ugettext_lazy as _
+except ImportError:
+    from django.utils.translation import ngettext_lazy as _
 from django.utils.text import get_valid_filename, slugify
 from django.utils.encoding import python_2_unicode_compatible
 

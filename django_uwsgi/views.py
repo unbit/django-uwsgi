@@ -1,6 +1,10 @@
 from __future__ import unicode_literals
 from django.http import HttpResponseRedirect
-from django.utils.translation import ugettext_lazy as _
+try:
+    from django.utils.translation import ugettext_lazy as _
+except ImportError:
+    from django.utils.translation import ngettext_lazy as _
+
 from django.contrib import messages
 try:
     from django.urls import reverse_lazy
